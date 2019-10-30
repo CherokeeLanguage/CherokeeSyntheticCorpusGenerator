@@ -48,8 +48,8 @@ public class WordSubstitutor {
 		Iterator<CorpusEntry> iterator = generatedCorpusEntries.getCards().iterator();
 		while (iterator.hasNext()) {
 			CorpusEntry entry = iterator.next();
-			String lcEn = entry.getChallenge().get(0).toLowerCase().trim();
-			String lcChr = entry.getAnswer().get(0).toLowerCase().trim();
+			String lcEn = entry.getAnswer().get(0).toLowerCase().trim();
+			String lcChr = entry.getChallenge().get(0).toLowerCase().trim();
 			String enChr = lcEn+"|"+lcChr;
 			if (already.contains(enChr)) {
 				iterator.remove();
@@ -68,8 +68,8 @@ public class WordSubstitutor {
 		ListIterator<CorpusEntry> listIterator = corpusEntries.getCards().listIterator();
 		while (listIterator.hasNext()) {
 			CorpusEntry entry = listIterator.next();
-			String en = entry.getChallenge().get(0);
-			String chr = entry.getAnswer().get(0);
+			String en = entry.getAnswer().get(0);
+			String chr = entry.getChallenge().get(0);
 			if (!en.contains("'")) {
 				continue;
 			}
@@ -99,12 +99,12 @@ public class WordSubstitutor {
 			alt = alt.replaceAll("(?i)(\\w)n't\\b", "$1 not");
 			if (!alt.equals(en)) {
 				CorpusEntry ce = new CorpusEntry();
-				ce.setChallenge(Arrays.asList(alt));
-				ce.setAnswer(Arrays.asList(chr));
+				ce.setAnswer(Arrays.asList(alt));
+				ce.setChallenge(Arrays.asList(chr));
 				listIterator.add(ce);
 				ce = new CorpusEntry();
-				ce.setChallenge(Arrays.asList(alt));
-				ce.setAnswer(Arrays.asList(chr));
+				ce.setAnswer(Arrays.asList(alt));
+				ce.setChallenge(Arrays.asList(chr));
 				generatedCorpusEntries.getCards().add(ce);
 				continue;
 			}
@@ -121,8 +121,8 @@ public class WordSubstitutor {
 		ListIterator<CorpusEntry> listIterator = corpusEntries.getCards().listIterator();
 		while (listIterator.hasNext()) {
 			CorpusEntry entry = listIterator.next();
-			String en = entry.getChallenge().get(0);
-			String chr = entry.getAnswer().get(0);
+			String en = entry.getAnswer().get(0);
+			String chr = entry.getChallenge().get(0);
 			if (en.matches(".*\\d.*")) {
 				continue;
 			}
@@ -152,12 +152,12 @@ public class WordSubstitutor {
 					continue;
 				}
 				CorpusEntry ce = new CorpusEntry();
-				ce.setChallenge(Arrays.asList(entrim));
-				ce.setAnswer(Arrays.asList(chrtrim));
+				ce.setAnswer(Arrays.asList(entrim));
+				ce.setChallenge(Arrays.asList(chrtrim));
 				listIterator.add(ce);
 				ce = new CorpusEntry();
-				ce.setChallenge(Arrays.asList(entrim));
-				ce.setAnswer(Arrays.asList(chrtrim));
+				ce.setAnswer(Arrays.asList(entrim));
+				ce.setChallenge(Arrays.asList(chrtrim));
 				generatedCorpusEntries.getCards().add(ce);
 			}
 		}
@@ -165,8 +165,8 @@ public class WordSubstitutor {
 
 	private static void doHeSheSubstitutions() {
 		for (CorpusEntry entry : corpusEntries.getCards()) {
-			String en = entry.getChallenge().get(0);
-			String chr = entry.getAnswer().get(0);
+			String en = entry.getAnswer().get(0);
+			String chr = entry.getChallenge().get(0);
 			en = en.replaceAll("(?i)\b(he|she|him|her|his|hers)\b", SpecialChars.RIGHT_ARROW + "$1");
 			en = en.replaceAll(SpecialChars.RIGHT_ARROW + "He\b", "She");
 			en = en.replaceAll(SpecialChars.RIGHT_ARROW + "he\b", "she");
@@ -180,10 +180,10 @@ public class WordSubstitutor {
 			en = en.replaceAll(SpecialChars.RIGHT_ARROW + "his\b", "hers");
 			en = en.replaceAll(SpecialChars.RIGHT_ARROW + "Hers\b", "His");
 			en = en.replaceAll(SpecialChars.RIGHT_ARROW + "hers\b", "his");
-			if (!en.equalsIgnoreCase(entry.getChallenge().get(0))) {
+			if (!en.equalsIgnoreCase(entry.getAnswer().get(0))) {
 				CorpusEntry ce = new CorpusEntry();
-				ce.setChallenge(Arrays.asList(en.trim()));
-				ce.setAnswer(Arrays.asList(chr.trim()));
+				ce.setAnswer(Arrays.asList(en.trim()));
+				ce.setChallenge(Arrays.asList(chr.trim()));
 				generatedCorpusEntries.getCards().add(ce);
 			}
 		}
@@ -228,8 +228,8 @@ public class WordSubstitutor {
 				continue;
 			}
 			CorpusEntry entry = new CorpusEntry();
-			entry.setChallenge(Arrays.asList(en));
-			entry.setAnswer(Arrays.asList(chr));
+			entry.setAnswer(Arrays.asList(en));
+			entry.setChallenge(Arrays.asList(chr));
 			corpusEntries.getCards().add(entry);
 		}
 
