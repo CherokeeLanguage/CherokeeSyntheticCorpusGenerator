@@ -152,13 +152,13 @@ public class Conjugator {
 				c.setVgroup(term);
 				c.setPgroup("");
 				// chr
-				c.getChallenge().add(term);
+				c.getChr().add(term);
 				// latin
-				c.getChallenge().add(challenge[3]);
+				c.getChr().add(challenge[3]);
 				for (String def : challenge[5].split(";")) {
 					d.def=def;
 					definitionEnglishFixer(d);
-					c.getAnswer().add(StringUtils.strip(d.def));
+					c.getEn().add(StringUtils.strip(d.def));
 				}
 				continue;
 			}
@@ -581,16 +581,16 @@ public class Conjugator {
 					deck.getCards().add(c);
 					c.setVgroup(vgroup);
 					c.setPgroup(pgroup);
-					c.getChallenge().add(d.chr);
-					c.getChallenge().add(d.latin);
+					c.getChr().add(d.chr);
+					c.getChr().add(d.latin);
 				}
 
 				definitionEnglishFixer(d);
 
-				if (c.getAnswer().contains(d.def)) {
+				if (c.getEn().contains(d.def)) {
 					System.err.println("=== WARNING! DUPLICATE DEFINITION: " + d.chr + ", " + d.def);
 				} else {
-					c.getAnswer().add(d.def);
+					c.getEn().add(d.def);
 				}
 
 			}
@@ -605,7 +605,7 @@ public class Conjugator {
 
 	private static CorpusEntry getCardByChallenge(String chr, CorpusEntries deck) {
 		for (CorpusEntry card : deck.getCards()) {
-			if (card.getChallenge().get(0).equalsIgnoreCase(chr)) {
+			if (card.getChr().get(0).equalsIgnoreCase(chr)) {
 				return card;
 			}
 		}
