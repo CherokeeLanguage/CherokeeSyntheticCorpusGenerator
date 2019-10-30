@@ -144,7 +144,6 @@ public class Conjugator {
 
 			if (vtypes.contains("n")) {
 				String term = challenge[2];
-				System.err.println("Term: " + term);
 				CorpusEntry c = getCardByChallenge(term, deck);
 				if (c == null) {
 					c = new CorpusEntry();
