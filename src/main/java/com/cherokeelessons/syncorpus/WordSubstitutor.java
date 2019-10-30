@@ -20,7 +20,9 @@ import com.cherokeelessons.syncorpus.models.SpecialChars;
 
 /**
  * Simple substitution of "nouns" and "gendered pronouns" for various CED
- * example entries. Only entries with substitutions are generated.
+ * example entries. Only entries with substitutions are generated. <br>
+ * Also does basic sentence and phrase splitting between language pairs based on
+ * punctuation line ups.
  * 
  * @author muksihs
  *
@@ -34,9 +36,9 @@ public class WordSubstitutor {
 	public static List<CorpusEntry> getCorpusEntries() throws IOException {
 		loadResources();
 		doEnglishUncontractions();
-		doSplits();
+		doCedSplits();
 		doHeSheSubstitutions();
-		dedupeEntries(); //do last
+		dedupeEntries(); // do last
 		return generatedCorpusEntries.getCards();
 	}
 
@@ -50,7 +52,7 @@ public class WordSubstitutor {
 			CorpusEntry entry = iterator.next();
 			String lcEn = entry.getAnswer().get(0).toLowerCase().trim();
 			String lcChr = entry.getChallenge().get(0).toLowerCase().trim();
-			String enChr = lcEn+"|"+lcChr;
+			String enChr = lcEn + "|" + lcChr;
 			if (already.contains(enChr)) {
 				iterator.remove();
 				continue;
@@ -61,8 +63,9 @@ public class WordSubstitutor {
 
 	/**
 	 * Look for common English contractions and decontract them. Add new primary
-	 * entries for word substitution consideration and split consideration and also add to the corpus list
-	 * to be output. Must be done before any split checking or substitutions. Assumes *straight* quotes.
+	 * entries for word substitution consideration and split consideration and also
+	 * add to the corpus list to be output. Must be done before any split checking
+	 * or substitutions. Assumes *straight* quotes.
 	 */
 	private static void doEnglishUncontractions() {
 		ListIterator<CorpusEntry> listIterator = corpusEntries.getCards().listIterator();
@@ -117,7 +120,7 @@ public class WordSubstitutor {
 	 * to the corpus list to be output. Uses a simplistic punctuation and numbers
 	 * must match check.
 	 */
-	private static void doSplits() {
+	private static void doCedSplits() {
 		ListIterator<CorpusEntry> listIterator = corpusEntries.getCards().listIterator();
 		while (listIterator.hasNext()) {
 			CorpusEntry entry = listIterator.next();
@@ -167,23 +170,24 @@ public class WordSubstitutor {
 		for (CorpusEntry entry : corpusEntries.getCards()) {
 			String en = entry.getAnswer().get(0);
 			String chr = entry.getChallenge().get(0);
-			en = en.replaceAll("(?i)\b(he|she|him|her|his|hers)\b", SpecialChars.RIGHT_ARROW + "$1");
-			en = en.replaceAll(SpecialChars.RIGHT_ARROW + "He\b", "She");
-			en = en.replaceAll(SpecialChars.RIGHT_ARROW + "he\b", "she");
-			en = en.replaceAll(SpecialChars.RIGHT_ARROW + "She\b", "He");
-			en = en.replaceAll(SpecialChars.RIGHT_ARROW + "she\b", "he");
-			en = en.replaceAll(SpecialChars.RIGHT_ARROW + "Him\b", "Her");
-			en = en.replaceAll(SpecialChars.RIGHT_ARROW + "him\b", "her");
-			en = en.replaceAll(SpecialChars.RIGHT_ARROW + "Her\b", "Him");
-			en = en.replaceAll(SpecialChars.RIGHT_ARROW + "her\b", "him");
-			en = en.replaceAll(SpecialChars.RIGHT_ARROW + "His\b", "Hers");
-			en = en.replaceAll(SpecialChars.RIGHT_ARROW + "his\b", "hers");
-			en = en.replaceAll(SpecialChars.RIGHT_ARROW + "Hers\b", "His");
-			en = en.replaceAll(SpecialChars.RIGHT_ARROW + "hers\b", "his");
-			if (!en.equalsIgnoreCase(entry.getAnswer().get(0))) {
+			String alt = en;
+			alt = alt.replaceAll("(?i)\b(he|she|him|her|his|hers)\b", SpecialChars.RIGHT_ARROW + "$1");
+			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "He\b", "She");
+			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "he\b", "she");
+			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "She\b", "He");
+			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "she\b", "he");
+			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "Him\b", "Her");
+			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "him\b", "her");
+			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "Her\b", "Him");
+			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "her\b", "him");
+			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "His\b", "Hers");
+			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "his\b", "hers");
+			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "Hers\b", "His");
+			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "hers\b", "his");
+			if (!alt.equalsIgnoreCase(en)) {
 				CorpusEntry ce = new CorpusEntry();
-				ce.setAnswer(Arrays.asList(en.trim()));
-				ce.setChallenge(Arrays.asList(chr.trim()));
+				ce.setAnswer(Arrays.asList(alt));
+				ce.setChallenge(Arrays.asList(chr));
 				generatedCorpusEntries.getCards().add(ce);
 			}
 		}
