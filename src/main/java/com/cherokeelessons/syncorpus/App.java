@@ -18,7 +18,7 @@ public class App implements Runnable {
 	@Override
 	public void run() {
 		try {
-//			doBasicConjugations();
+			doBasicConjugations();
 			doWordSubstitutions();
 		} catch (IOException e) {
 			throw new IllegalStateException(e);
