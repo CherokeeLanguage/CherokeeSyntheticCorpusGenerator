@@ -20,8 +20,13 @@ public interface SpecialChars {
 	String LEFT_ARROW = "\u21e6";
 	String RIGHT_ARROW = "\u27a1";
 	String DOT = "•";
-	String RDQUOTE = "”";
-	String LDQUOTE = "“";
+	
+	String LDQUOTE = "\u201c";
+	String RDQUOTE = "\u201d";
+	
+	String LSQUOTE = "\u2018";
+	String RSQUOTE = "\u2019";
+	
 	String TONE_MARKER_1 = "\u00b9";
 	String TONE_MARKER_2 = "\u00b2";
 	String TONE_MARKER_3 = "\u00b3";

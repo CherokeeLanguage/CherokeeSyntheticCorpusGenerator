@@ -42,7 +42,10 @@ public class Main {
 				throw new IllegalStateException(outputFile.getAbsolutePath()+" is a directory.");
 			}
 			FileUtils.deleteQuietly(outputFile);
-			FileUtils.touch(outputFile);
+			try {
+				FileUtils.touch(outputFile);
+			} catch (Exception e) {
+			}
 			out = new PrintStream(outputFile, StandardCharsets.UTF_8.name());
 		}
 		new App(out).run();
