@@ -19,7 +19,7 @@ import com.cherokeelessons.syncorpus.models.CorpusEntry;
 import com.cherokeelessons.syncorpus.models.CorpusEntries;
 import com.cherokeelessons.syncorpus.models.SpecialChars;
 
-public class DataUtil {
+public class Conjugator {
 	private static String PRONOUNS_RSC = "pronouns.tsv";
 	private static String ENTRIES_RSC = "entries.tsv";
 
@@ -50,7 +50,7 @@ public class DataUtil {
 
 	private static void loadPronouns() throws IOException {
 		pronouns = new ArrayList<>();
-		try (LineIterator l = IOUtils.lineIterator(DataUtil.class.getResourceAsStream(PRONOUNS_RSC),
+		try (LineIterator l = IOUtils.lineIterator(Conjugator.class.getResourceAsStream(PRONOUNS_RSC),
 				StandardCharsets.UTF_8)) {
 			while (l.hasNext()) {
 				String[] copyOf = Arrays.copyOf(l.next().split("\t"), 9);
@@ -100,7 +100,7 @@ public class DataUtil {
 
 	private static void loadEntries() throws IOException {
 		entries = new ArrayList<>();
-		try (LineIterator l = IOUtils.lineIterator(DataUtil.class.getResourceAsStream(ENTRIES_RSC),
+		try (LineIterator l = IOUtils.lineIterator(Conjugator.class.getResourceAsStream(ENTRIES_RSC),
 				StandardCharsets.UTF_8)) {
 			while (l.hasNext()) {
 				String[] copyOf = Arrays.copyOf(l.next().split("\t"), 9);
@@ -213,7 +213,6 @@ public class DataUtil {
 
 			String vgroup = vroot_h_chr;
 
-			System.err.println("Conjugating: " + vroot_h_chr);
 			final Iterator<String[]> ipro = getPronouns().iterator();
 			while (ipro.hasNext()) {
 				String[] pronoun = ipro.next();
@@ -597,7 +596,6 @@ public class DataUtil {
 
 			}
 		}
-		System.err.println("--- Finished conjugating ...");
 	}
 
 	public static class DataSet {

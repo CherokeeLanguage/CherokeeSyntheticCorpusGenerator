@@ -30,8 +30,12 @@ dependencies {
     annotationProcessor 'com.github.vbauer.jackdaw:jackdaw-apt:1.1.2'
 	compile 'com.github.vbauer.jackdaw:jackdaw-core:1.1.2'
     
-	compile 'commons-io:commons-io:+'
-	compile 'org.apache.commons:commons-text:+'
+	compile 'commons-io:commons-io:2.6'
+	compile 'org.apache.commons:commons-text:1.8'
+	
+	// https://mvnrepository.com/artifact/commons-cli/commons-cli
+	compile group: 'commons-cli', name: 'commons-cli', version: '1.4'
+	
 	
 	// https://mvnrepository.com/artifact/org.testng/testng
 	testCompile group: 'org.testng', name: 'testng', version: '7.+'
