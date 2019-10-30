@@ -38,8 +38,32 @@ public class WordSubstitutor {
 		doEnglishUncontractions();
 		doCedSplits();
 		doHeSheSubstitutions();
+		doCritterSubstitutions();
 		dedupeEntries(); // do last
 		return generatedCorpusEntries.getCards();
+	}
+
+	/**
+	 * Process previously generated entries for additional permutations to create via critter substitutions.
+	 */
+	private static void doCritterSubstitutions() {
+		ListIterator<CorpusEntry> listIterator = generatedCorpusEntries.getCards().listIterator();
+		while (listIterator.hasNext()) {
+			CorpusEntry entry = listIterator.next();
+			String en = entry.getEn().get(0);
+			String chr = entry.getChr().get(0);
+			
+			//Are the sentences close matches?
+			String xen = en.replaceAll("(?i)['a-z\\s]", "");
+			String xchr = chr.replaceAll("(?i)['Ꭰ-Ᏼ\\s]", "");
+			if (!xen.equals(xchr)) {
+				continue;
+			}
+			//Does it look like only a single sentence?
+			if (en.matches(".+[.?!].+")) {
+				continue;
+			}
+		}
 	}
 
 	/**
