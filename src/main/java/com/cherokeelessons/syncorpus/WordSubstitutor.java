@@ -169,17 +169,25 @@ public class WordSubstitutor {
 	private static void doHeSheSubstitutions() {
 		for (CorpusEntry entry : corpusEntries.getCards()) {
 			String en = entry.getEn().get(0);
+			if (en.matches("(?i).*\\bher\\b.*")) {
+				//English pronoun "her" is ambiguous. Skip the sentence entirely for processing.
+				continue;
+			}
 			String chr = entry.getChr().get(0);
 			String alt = en;
-			alt = alt.replaceAll("(?i)\b(he|she|him|her|his|hers)\\b", SpecialChars.RIGHT_ARROW + "$1");
+			alt = alt.replaceAll("(?i)\\b(he|she|him|his|hers|herself|himself)\\b", SpecialChars.RIGHT_ARROW + "$1");
+			alt = alt.replaceAll("(?i)"+SpecialChars.RIGHT_ARROW + "(H)imself\\b", "$1erself");
+			alt = alt.replaceAll("(?i)"+SpecialChars.RIGHT_ARROW + "(H)erself\\b", "$1imself");
+			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "he\\b", "she");
+			
 			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "He\\b", "She");
 			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "he\\b", "she");
 			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "She\\b", "He");
 			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "she\\b", "he");
 			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "Him\\b", "Her");
 			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "him\\b", "her");
-			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "Her\\b", "Him");
-			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "her\\b", "him");
+			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "His\\s\\b", "Her ");
+			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "his\\s\\b", "her ");
 			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "His\\b", "Hers");
 			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "his\\b", "hers");
 			alt = alt.replaceAll(SpecialChars.RIGHT_ARROW + "Hers\\b", "His");
