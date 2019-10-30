@@ -1,5 +1,6 @@
 package com.cherokeelessons.syncorpus;
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Iterator;
 
@@ -16,12 +17,23 @@ public class App implements Runnable {
 
 	@Override
 	public void run() {
-		doBasicConjugations();
-		doWordSubstitutions();
+		try {
+//			doBasicConjugations();
+			doWordSubstitutions();
+		} catch (IOException e) {
+			throw new IllegalStateException(e);
+		}
 	}
 
-	private void doWordSubstitutions() {
-		
+	private void doWordSubstitutions() throws IOException {
+		for (CorpusEntry entry :WordSubstitutor.getCorpusEntries()) {
+			String l1 = entry.getChallenge().get(0);
+			Iterator<String> i2 = entry.getAnswer().iterator();
+			while (i2.hasNext()) {
+				String next = i2.next();
+				out.println(l1 + "\t" + next);
+			}
+		}
 	}
 
 	private void doBasicConjugations() {
