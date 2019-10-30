@@ -35,7 +35,7 @@ public class Main {
 		PrintStream out = System.out;
 		if (cmd.hasOption("o")) {
 			File outputFile = new File(cmd.getOptionValue("o"));
-			if (!outputFile.getAbsoluteFile().isDirectory()) {
+			if (!outputFile.getAbsoluteFile().getParentFile().isDirectory()) {
 				throw new IllegalStateException("Directory "+outputFile.getAbsoluteFile().getParent()+" does not exist.");
 			}
 			if (outputFile.isDirectory()) {
